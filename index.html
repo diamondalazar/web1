@@ -108,102 +108,66 @@
             transform: scale(1.1);
         }
 
-        /* Specializations Section */
-        .specializations {
-            padding: 5rem 5%;
-            background-color: #f9f9f9;
+        /* Dynamic Section Styles */
+        .dynamic-section {
+            padding: 2rem;
+            margin: 2rem 5%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary-color);
+        .dynamic-section img, .dynamic-section video, .dynamic-section audio {
+            max-width: 100%;
+            border-radius: 10px;
         }
 
-        .specialization-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .dynamic-section h3 {
+            color: var(--secondary-color);
         }
 
-        .specialization-card {
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
             background: white;
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .specialization-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-        }
-
-        .specialization-card h3 {
-            color: var(--secondary-color);
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 5rem 5%;
-            background: var(--accent-color);
-            color: white;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
         }
 
-        .testimonials h2 {
-            margin-bottom: 2rem;
-        }
-
-        .testimonial {
-            margin-bottom: 1.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-color);
-            color: white;
-            padding: 3rem 5%;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-grid a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .footer-grid a:hover {
-            color: var(--secondary-color);
-        }
-
-        .newsletter {
-            margin-top: 2rem;
-        }
-
-        .newsletter input[type="email"] {
+        .modal-content input, .modal-content select, .modal-content textarea {
+            width: 100%;
+            margin: 1rem 0;
             padding: 0.5rem;
-            width: 70%;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            margin-right: 1rem;
         }
 
-        .newsletter button {
+        .modal-content button {
             padding: 0.5rem 1rem;
-            background: var(--secondary-color);
+            background: var(--primary-color);
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        .newsletter button:hover {
-            background: #c0392b;
+        .modal-content button:hover {
+            background: var(--secondary-color);
         }
     </style>
 </head>
@@ -224,70 +188,61 @@
         <div class="hero-content">
             <h1>Master Data Science & Analytics</h1>
             <p>Transform your career with our comprehensive training programs led by industry experts</p>
-            <button class="button">Explore Programs</button>
+            <button class="button" id="add-section-btn">Add Section</button>
         </div>
     </section>
 
-    <section class="specializations" id="specializations">
-        <div class="section-title">
-            <h2>Our Specializations</h2>
-            <p>Choose from 10 specialized tracks designed to make you an expert</p>
-        </div>
-        <div class="specialization-grid">
-            <div class="specialization-card">
-                <h3>Data Science & Machine Learning</h3>
-                <p>Master the fundamentals of ML algorithms and their applications</p>
-            </div>
-            <div class="specialization-card">
-                <h3>Deep Learning & AI</h3>
-                <p>Build neural networks and implement advanced AI solutions</p>
-            </div>
-            <div class="specialization-card">
-                <h3>Big Data Analytics</h3>
-                <p>Learn to process and analyze large-scale data using modern tools</p>
-            </div>
-        </div>
-    </section>
+    <div id="dynamic-content"></div>
 
-    <section class="testimonials" id="testimonials">
-        <h2>What Our Students Say</h2>
-        <div class="testimonial">
-            <p>"The best decision I ever made for my career!" - Jane Doe</p>
+    <!-- Modal for Adding Sections -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3>Add a New Section</h3>
+            <select id="section-type">
+                <option value="text">Text</option>
+                <option value="image">Image</option>
+                <option value="video">Video</option>
+                <option value="music">Music</option>
+            </select>
+            <textarea id="section-content" placeholder="Enter content or URL"></textarea>
+            <button id="add-section">Add Section</button>
+            <button id="close-modal">Close</button>
         </div>
-        <div class="testimonial">
-            <p>"The instructors are top-notch and the content is practical." - John Smith</p>
-        </div>
-    </section>
+    </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div>
-                <h3>Contact Us</h3>
-                <p>Email: info@datasci.academy</p>
-                <p>Phone: (555) 123-4567</p>
-            </div>
-            <div>
-                <h3>Quick Links</h3>
-                <p><a href="#">Programs</a></p>
-                <p><a href="#">Admissions</a></p>
-                <p><a href="#">Career Support</a></p>
-            </div>
-            <div>
-                <h3>Follow Us</h3>
-                <div style="font-size: 1.5rem;">
-                    <i class="fab fa-linkedin"></i>
-                    <i class="fab fa-twitter"></i>
-                    <i class="fab fa-facebook"></i>
-                </div>
-            </div>
-        </div>
-        <div class="newsletter">
-            <h3>Subscribe to Our Newsletter</h3>
-            <form>
-                <input type="email" placeholder="Enter your email" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
-    </footer>
+    <script>
+        // Open Modal
+        document.getElementById('add-section-btn').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'flex';
+        });
+
+        // Close Modal
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('modal').style.display = 'none';
+        });
+
+        // Add Section
+        document.getElementById('add-section').addEventListener('click', () => {
+            const type = document.getElementById('section-type').value;
+            const content = document.getElementById('section-content').value;
+            const dynamicContent = document.getElementById('dynamic-content');
+
+            let newSection = document.createElement('div');
+            newSection.classList.add('dynamic-section');
+
+            if (type === 'text') {
+                newSection.innerHTML = `<p>${content}</p>`;
+            } else if (type === 'image') {
+                newSection.innerHTML = `<img src="${content}" alt="User Image">`;
+            } else if (type === 'video') {
+                newSection.innerHTML = `<video controls><source src="${content}" type="video/mp4">Your browser does not support the video tag.</video>`;
+            } else if (type === 'music') {
+                newSection.innerHTML = `<audio controls><source src="${content}" type="audio/mpeg">Your browser does not support the audio tag.</audio>`;
+            }
+
+            dynamicContent.appendChild(newSection);
+            document.getElementById('modal').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
