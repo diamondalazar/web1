@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convert DOCX to PDF</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.25.0/docxtemplater.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <h1>Convert DOCX to PDF</h1>
-    <p>Select a DOC or DOCX file to convert:</p>
-    <input type="file" id="uploadFile" accept=".doc,.docx">
+    <p>Select a DOCX file to convert:</p>
+    <input type="file" id="uploadFile" accept=".docx">
     <button id="convertButton">Convert to PDF</button>
     <p id="status"></p>
 
     <script>
-        document.getElementById('convertButton').addEventListener('click', () => {
+        document.getElementById('convertButton').addEventListener('click', async () => {
             const fileInput = document.getElementById('uploadFile');
             const status = document.getElementById('status');
 
@@ -29,26 +28,33 @@
             const reader = new FileReader();
 
             reader.onload = async function(event) {
-                const content = event.target.result;
-
                 try {
-                    // Here, we assume the file is text-based.
+                    // Use Mammoth.js to extract text from the DOCX file
+                    const arrayBuffer = event.target.result;
+                    const result = await Mammoth.extractRawText({ arrayBuffer });
+
+                    // Create a PDF with the extracted text using jsPDF
+                    const { jsPDF } = window.jspdf;
                     const doc = new jsPDF();
-                    doc.text(content, 10, 10);
+                    const lines = doc.splitTextToSize(result.value, 180); // Wrap text
+                    doc.text(lines, 10, 10);
                     doc.save('converted.pdf');
+
                     status.textContent = "PDF successfully created!";
                 } catch (error) {
-                    status.textContent = "Error converting file. Ensure the file is valid.";
+                    status.textContent = "Error converting file. Ensure the file is a valid DOCX.";
+                    console.error("Conversion error:", error);
                 }
             };
 
-            if (file.name.endsWith('.docx') || file.name.endsWith('.doc')) {
-                reader.readAsText(file); // Read file as plain text
+            if (file.name.endsWith('.docx')) {
+                reader.readAsArrayBuffer(file); // Read file as ArrayBuffer for Mammoth.js
             } else {
-                status.textContent = "Invalid file type. Please upload a DOC or DOCX file.";
+                status.textContent = "Invalid file type. Please upload a DOCX file.";
             }
         });
     </script>
 </body>
 </html>
+
 
