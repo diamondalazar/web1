@@ -12,12 +12,16 @@
     <p>Select a DOCX file to convert:</p>
     <input type="file" id="uploadFile" accept=".docx">
     <button id="convertButton">Convert to PDF</button>
+    <button id="downloadButton" style="display: none;">Download PDF</button>
     <p id="status"></p>
 
     <script>
+        let pdfDoc = null; // Variable to store the generated PDF
+
         document.getElementById('convertButton').addEventListener('click', async () => {
             const fileInput = document.getElementById('uploadFile');
             const status = document.getElementById('status');
+            const downloadButton = document.getElementById('downloadButton');
 
             if (!fileInput.files.length) {
                 status.textContent = "Please select a file.";
@@ -29,18 +33,23 @@
 
             reader.onload = async function(event) {
                 try {
-                    // Use Mammoth.js to extract text from the DOCX file
                     const arrayBuffer = event.target.result;
+
+                    // Extract text from DOCX using Mammoth.js
                     const result = await Mammoth.extractRawText({ arrayBuffer });
 
-                    // Create a PDF with the extracted text using jsPDF
+                    if (!result.value.trim()) {
+                        throw new Error("No valid text content found in the file.");
+                    }
+
+                    // Generate PDF using jsPDF
                     const { jsPDF } = window.jspdf;
-                    const doc = new jsPDF();
-                    const lines = doc.splitTextToSize(result.value, 180); // Wrap text
-                    doc.text(lines, 10, 10);
-                    doc.save('converted.pdf');
+                    pdfDoc = new jsPDF();
+                    const lines = pdfDoc.splitTextToSize(result.value, 180); // Wrap text
+                    pdfDoc.text(lines, 10, 10);
 
                     status.textContent = "PDF successfully created!";
+                    downloadButton.style.display = "inline-block"; // Show download button
                 } catch (error) {
                     status.textContent = "Error converting file. Ensure the file is a valid DOCX.";
                     console.error("Conversion error:", error);
@@ -53,8 +62,15 @@
                 status.textContent = "Invalid file type. Please upload a DOCX file.";
             }
         });
+
+        document.getElementById('downloadButton').addEventListener('click', () => {
+            if (pdfDoc) {
+                pdfDoc.save('converted.pdf'); // Trigger PDF download
+            }
+        });
     </script>
 </body>
 </html>
+
 
 
