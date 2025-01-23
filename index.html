@@ -3,25 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convert DOCX to PDF</title>
+    <title>DOCX to PDF Converter</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #downloadButton {
+            display: none;
+        }
+        #status {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Convert DOCX to PDF</h1>
     <p>Select a DOCX file to convert:</p>
     <input type="file" id="uploadFile" accept=".docx">
     <button id="convertButton">Convert to PDF</button>
-    <button id="downloadButton" style="display: none;">Download PDF</button>
+    <button id="downloadButton">Download PDF</button>
     <p id="status"></p>
 
     <script>
-        let pdfDoc = null; // Variable to store the generated PDF
+        let pdfDoc = null; // Store the generated PDF for download
 
+        // Handle conversion on button click
         document.getElementById('convertButton').addEventListener('click', async () => {
             const fileInput = document.getElementById('uploadFile');
             const status = document.getElementById('status');
             const downloadButton = document.getElementById('downloadButton');
+
+            status.textContent = ""; // Clear any previous status messages
+            downloadButton.style.display = "none"; // Hide download button initially
 
             if (!fileInput.files.length) {
                 status.textContent = "Please select a file.";
@@ -63,6 +86,7 @@
             }
         });
 
+        // Handle PDF download
         document.getElementById('downloadButton').addEventListener('click', () => {
             if (pdfDoc) {
                 pdfDoc.save('converted.pdf'); // Trigger PDF download
