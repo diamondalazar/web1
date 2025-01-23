@@ -17,13 +17,14 @@
             --primary-color: #1abc9c; /* Vibrant teal */
             --secondary-color: #e74c3c; /* Bright red */
             --accent-color: #3498db; /* Blue */
+            --text-color: yellow; /* Yellow text */
             --background-gradient: linear-gradient(135deg, #1abc9c, #3498db);
         }
 
         body {
             line-height: 1.6;
             background: var(--background-gradient);
-            color: #333;
+            color: var(--text-color);
         }
 
         /* Header Styles */
@@ -53,37 +54,6 @@
         .nav-links {
             display: flex;
             gap: 2rem;
-        }
-
-        .nav-links .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            border-radius: 5px;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: var(--primary-color);
-            color: white;
         }
 
         .nav-links a {
@@ -129,12 +99,13 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
             font-size: 1.2rem;
         }
 
         .button:hover {
             background: #c0392b;
+            transform: scale(1.1);
         }
 
         /* Specializations Section */
@@ -172,6 +143,22 @@
             color: var(--secondary-color);
         }
 
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 5%;
+            background: var(--accent-color);
+            color: white;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            margin-bottom: 2rem;
+        }
+
+        .testimonial {
+            margin-bottom: 1.5rem;
+        }
+
         /* Footer */
         footer {
             background: var(--primary-color);
@@ -193,6 +180,31 @@
         .footer-grid a:hover {
             color: var(--secondary-color);
         }
+
+        .newsletter {
+            margin-top: 2rem;
+        }
+
+        .newsletter input[type="email"] {
+            padding: 0.5rem;
+            width: 70%;
+            border: none;
+            border-radius: 5px;
+            margin-right: 1rem;
+        }
+
+        .newsletter button {
+            padding: 0.5rem 1rem;
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .newsletter button:hover {
+            background: #c0392b;
+        }
     </style>
 </head>
 <body>
@@ -200,52 +212,10 @@
         <nav>
             <div class="logo">DataSci Academy</div>
             <div class="nav-links">
-                <div class="dropdown">
-                    <a href="#specializations">Specializations ▼</a>
-                    <div class="dropdown-content">
-                        <a href="specializations/machine-learning.html" target="_blank">Data Science & ML</a>
-                        <a href="specializations/deep-learning.html" target="_blank">Deep Learning & AI</a>
-                        <a href="specializations/big-data.html" target="_blank">Big Data Analytics</a>
-                        <a href="specializations/business-analytics.html" target="_blank">Business Analytics</a>
-                        <a href="specializations/data-engineering.html" target="_blank">Data Engineering</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#courses">Courses ▼</a>
-                    <div class="dropdown-content">
-                        <a href="courses/python.html" target="_blank">Python Programming</a>
-                        <a href="courses/statistics.html" target="_blank">Statistics Fundamentals</a>
-                        <a href="courses/ml-basics.html" target="_blank">ML Foundations</a>
-                        <a href="courses/data-viz.html" target="_blank">Data Visualization</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#about">About ▼</a>
-                    <div class="dropdown-content">
-                        <a href="about/our-story.html" target="_blank">Our Story</a>
-                        <a href="about/instructors.html" target="_blank">Instructors</a>
-                        <a href="about/testimonials.html" target="_blank">Testimonials</a>
-                        <a href="about/facilities.html" target="_blank">Facilities</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#resources">Resources ▼</a>
-                    <div class="dropdown-content">
-                        <a href="resources/blog.html" target="_blank">Blog</a>
-                        <a href="resources/webinars.html" target="_blank">Webinars</a>
-                        <a href="resources/research.html" target="_blank">Research Papers</a>
-                        <a href="resources/community.html" target="_blank">Community</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#contact">Contact ▼</a>
-                    <div class="dropdown-content">
-                        <a href="contact/admissions.html" target="_blank">Admissions</a>
-                        <a href="contact/support.html" target="_blank">Technical Support</a>
-                        <a href="contact/careers.html" target="_blank">Careers</a>
-                        <a href="contact/locations.html" target="_blank">Locations</a>
-                    </div>
-                </div>
+                <a href="#home">Home</a>
+                <a href="#specializations">Specializations</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#contact">Contact</a>
             </div>
         </nav>
     </header>
@@ -279,6 +249,16 @@
         </div>
     </section>
 
+    <section class="testimonials" id="testimonials">
+        <h2>What Our Students Say</h2>
+        <div class="testimonial">
+            <p>"The best decision I ever made for my career!" - Jane Doe</p>
+        </div>
+        <div class="testimonial">
+            <p>"The instructors are top-notch and the content is practical." - John Smith</p>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-grid">
             <div>
@@ -300,6 +280,13 @@
                     <i class="fab fa-facebook"></i>
                 </div>
             </div>
+        </div>
+        <div class="newsletter">
+            <h3>Subscribe to Our Newsletter</h3>
+            <form>
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
         </div>
     </footer>
 </body>
